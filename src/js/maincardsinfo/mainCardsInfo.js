@@ -1,12 +1,12 @@
 const mainCards = [
-    {source: 'img/action1/draw.jpg', title: 'Action (set A)', route: '/actionseta'},
-    {source: 'img/action2/play.jpg', title: 'Action (set B)', route: '/actionsetb'},
-    {source: 'img/action3/drive.jpg', title: 'Action (set C)', route: '/actionsetc'},
-    {source: 'img/adjective/big.jpg', title: 'Adjective', route: '/adjective'},
-    {source: 'img/animals1/cat.jpg', title: 'Animals (set A)', route: '/animalseta'},
-    {source: 'img/animals2/frog.jpg', title: 'Animals (set B)', route: '/animalsetb'},
-    {source: 'img/clothes/blouse.jpg', title: 'Clothes', route: '/clothes'},
-    {source: 'img/emotions/happy.jpg', title: 'Emotions', route: '/emotion'}
+    {source: './img/action1/draw.jpg', title: 'Action (set A)', route: '/actionseta'},
+    {source: './img/action2/play.jpg', title: 'Action (set B)', route: '/actionsetb'},
+    {source: './img/action3/drive.jpg', title: 'Action (set C)', route: '/actionsetc'},
+    {source: './img/adjective/big.jpg', title: 'Adjective', route: '/adjective'},
+    {source: './img/animals1/cat.jpg', title: 'Animals (set A)', route: '/animalseta'},
+    {source: './img/animals2/frog.jpg', title: 'Animals (set B)', route: '/animalsetb'},
+    {source: './img/clothes/blouse.jpg', title: 'Clothes', route: '/clothes'},
+    {source: './img/emotions/happy.jpg', title: 'Emotions', route: '/emotion'}
 ];
 
 const actionSetA = [
@@ -43,7 +43,7 @@ const actionSetC = [
 ];
 
 const adjective = [
-    {source: '/img/adjective/bid.jpg', title: 'big', russianTitle: 'большой', audio: '/img/audio/adjective/big.mp3'},
+    {source: '/img/adjective/big.jpg', title: 'big', russianTitle: 'большой', audio: '/img/audio/adjective/big.mp3'},
     {source: '/img/adjective/small.jpg', title: 'small', russianTitle: 'маленький', audio: '/img/audio/adjective/small.mp3'},
     {source: '/img/adjective/fast.jpg', title: 'fast', russianTitle: 'быстрый', audio: '/img/audio/adjective/fast.mp3'},
     {source: '/img/adjective/slow.jpg', title: 'slow', russianTitle: 'медленный', audio: '/img/audio/adjective/slow.mp3'},
@@ -54,25 +54,25 @@ const adjective = [
 ];
 
 const animalSetA = [
-    {source: '/img/animal1/cat.jpg', title: 'cat', russianTitle: 'кот', audio: '/img/audio/animal1/cat.mp3'},
-    {source: '/img/animal1/chick.jpg', title: 'chick', russianTitle: 'цыплёнок', audio: '/img/audio/animal1/chick.mp3'},
-    {source: '/img/animal1/chicken.jpg', title: 'chicken', russianTitle: 'курица', audio: '/img/audio/animal1/chicken.mp3'},
-    {source: '/img/animal1/dog.jpg', title: 'dog', russianTitle: 'собака', audio: '/img/audio/animal1/dog.mp3'},
-    {source: '/img/animal1/horse.jpg', title: 'horse', russianTitle: 'лошадь', audio: '/img/audio/animal1/horse.mp3'},
-    {source: '/img/animal1/pig.jpg', title: 'pig', russianTitle: 'свинья', audio: '/img/audio/animal1/pig.mp3'},
-    {source: '/img/animal1/rabbit.jpg', title: 'rabbit', russianTitle: 'кролик', audio: '/img/audio/animal1/rabbit.mp3'},
-    {source: '/img/animal1/sheep.jpg', title: 'sheep', russianTitle: 'овца', audio: '/img/audio/animal1/sheep.mp3'},
+    {source: '/img/animals1/cat.jpg', title: 'cat', russianTitle: 'кот', audio: '/img/audio/animal1/cat.mp3'},
+    {source: '/img/animals1/chick.jpg', title: 'chick', russianTitle: 'цыплёнок', audio: '/img/audio/animal1/chick.mp3'},
+    {source: '/img/animals1/chicken.jpg', title: 'chicken', russianTitle: 'курица', audio: '/img/audio/animal1/chicken.mp3'},
+    {source: '/img/animals1/dog.jpg', title: 'dog', russianTitle: 'собака', audio: '/img/audio/animal1/dog.mp3'},
+    {source: '/img/animals1/horse.jpg', title: 'horse', russianTitle: 'лошадь', audio: '/img/audio/animal1/horse.mp3'},
+    {source: '/img/animals1/pig.jpg', title: 'pig', russianTitle: 'свинья', audio: '/img/audio/animal1/pig.mp3'},
+    {source: '/img/animals1/rabbit.jpg', title: 'rabbit', russianTitle: 'кролик', audio: '/img/audio/animal1/rabbit.mp3'},
+    {source: '/img/animals1/sheep.jpg', title: 'sheep', russianTitle: 'овца', audio: '/img/audio/animal1/sheep.mp3'},
 ];
 
 const animalSetB = [
-    {source: '/img/animal2/bird.jpg', title: 'bird', russianTitle: 'птица', audio: '/img/audio/animal2/bird.mp3'},
-    {source: '/img/animal2/dolphin.jpg', title: 'dolphin', russianTitle: 'дельфин', audio: '/img/audio/animal2/dolphin.mp3'},
-    {source: '/img/animal2/fish.jpg', title: 'fish', russianTitle: 'рыба', audio: '/img/audio/animal2/fish.mp3'},
-    {source: '/img/animal2/frog.jpg', title: 'frog', russianTitle: 'лягушка', audio: '/img/audio/animal2/frog.mp3'},
-    {source: '/img/animal2/giraffe.jpg', title: 'giraffe', russianTitle: 'жираф', audio: '/img/audio/animal2/giraffe.mp3'},
-    {source: '/img/animal2/lion.jpg', title: 'lion', russianTitle: 'лев', audio: '/img/audio/animal2/lion.mp3'},
-    {source: '/img/animal2/mouse.jpg', title: 'mouse', russianTitle: 'мышь', audio: '/img/audio/animal2/mouse.mp3'},
-    {source: '/img/animal2/turtle.jpg', title: 'turtle', russianTitle: 'черепаха', audio: '/img/audio/animal2/turtle.mp3'},
+    {source: '/img/animals2/bird.jpg', title: 'bird', russianTitle: 'птица', audio: '/img/audio/animal2/bird.mp3'},
+    {source: '/img/animals2/dolphin.jpg', title: 'dolphin', russianTitle: 'дельфин', audio: '/img/audio/animal2/dolphin.mp3'},
+    {source: '/img/animals2/fish.jpg', title: 'fish', russianTitle: 'рыба', audio: '/img/audio/animal2/fish.mp3'},
+    {source: '/img/animals2/frog.jpg', title: 'frog', russianTitle: 'лягушка', audio: '/img/audio/animal2/frog.mp3'},
+    {source: '/img/animals2/giraffe.jpg', title: 'giraffe', russianTitle: 'жираф', audio: '/img/audio/animal2/giraffe.mp3'},
+    {source: '/img/animals2/lion.jpg', title: 'lion', russianTitle: 'лев', audio: '/img/audio/animal2/lion.mp3'},
+    {source: '/img/animals2/mouse.jpg', title: 'mouse', russianTitle: 'мышь', audio: '/img/audio/animal2/mouse.mp3'},
+    {source: '/img/animals2/turtle.jpg', title: 'turtle', russianTitle: 'черепаха', audio: '/img/audio/animal2/turtle.mp3'},
 ];
 
 const clothes = [
@@ -102,16 +102,16 @@ const statistics = [
 ]
 
 const routes = [
-    {route: '/', data: mainCards , method: 'createMainCards'},
-    {route: '/actionseta', data: actionSetA, method: 'createThematicCards'},
-    {route: '/actionsetb', data: actionSetB, method: 'createThematicCards'},
-    {route: '/actionsetc', data: actionSetC, method: 'createThematicCards'},
-    {route: '/animalseta', data: animalSetA, method: 'createThematicCards'},
-    {route: '/animalsetb', data: animalSetB, method: 'createThematicCards'},
-    {route: '/adjective', data: adjective, method: 'createThematicCards'},
-    {route: '/emotion', data: emotion, method: 'createThematicCards'},
-    {route: '/clothes', data: clothes, method: 'createThematicCards'},
-    {route: '/statistics', data: statistics, method: 'createThematicCards'}
+    {route: '/', name: 'Main', data: mainCards , method: 'createMainCards'},
+    {route: '/actionseta', name: 'Action (Set A)', data: actionSetA, method: 'createThematicCards'},
+    {route: '/actionsetb', name: 'Action (Set B)', data: actionSetB, method: 'createThematicCards'},
+    {route: '/actionsetc',  name: 'Action (Set C)', data: actionSetC, method: 'createThematicCards'},
+    {route: '/animalseta', name: 'Animals (Set A)', data: animalSetA, method: 'createThematicCards'},
+    {route: '/animalsetb', name: 'Animals (Set B)', data: animalSetB, method: 'createThematicCards'},
+    {route: '/adjective', name: 'Adjective', data: adjective, method: 'createThematicCards'},
+    {route: '/emotion', name: 'Emotions', data: emotion, method: 'createThematicCards'},
+    {route: '/clothes', name: 'Clothes', data: clothes, method: 'createThematicCards'},
+    {route: '/statistics', name: 'Statistics', data: statistics, method: 'createThematicCards'}
 ]
 
 export {routes, mainCards, emotion, clothes, animalSetA, animalSetB, adjective, actionSetA, actionSetB, actionSetC};
