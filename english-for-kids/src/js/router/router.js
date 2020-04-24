@@ -5,7 +5,7 @@ export default class Router {
         this.routes = routes;
         Object.assign(this, elementsObject);
         const {route} = this.routes[0].route;
-        window.history.pushState({route}, `${route}`, route);
+        window.history.pushState({route}, route, route);
         this.pushHistory({href: '#/'});
         this.changeStateListener();
         this.navigationLinks[0].classList.add('selected');

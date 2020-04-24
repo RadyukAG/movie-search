@@ -17,11 +17,7 @@ function setDevTool() {
 }
 
 function setDMode() {
-  if (isProd) {
-    return 'production';
-  } else {
-    return 'development';
-  }
+  return isProd ? 'production' : 'development';
 }
 
 

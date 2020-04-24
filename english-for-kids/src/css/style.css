@@ -8,24 +8,6 @@ html {
     font-family: "Roboto regular", serif;
 }
 
-body {
-    margin: 0;
-}
-
-a {
-    text-decoration: none;
-    color: #000000;
-}
-
-ul {
-    margin: 0;
-    list-style-type: none;
-}
-
-p {
-    margin: 0;
-}
-
 .main-header {
     margin: 40px auto 0;
     max-width: 1374px;
@@ -276,7 +258,6 @@ input[type=checkbox]{
     width: 100%;
     height: 100%;
     backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
     text-align: center;
 }
 
@@ -300,11 +281,9 @@ input[type=checkbox]{
 }
 .category-card__inner_rotate .category-card__front {
     backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
 }
 
 .category-card__front .category-card__arrows {
-    -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
 }
 
@@ -327,8 +306,7 @@ input[type=checkbox]{
     background-image: url('../img/icons/arrowsRotate.svg');
     background-repeat: no-repeat;
     cursor: pointer;
-    backface-visibility: hidden !important;
-    -webkit-backface-visibility: hidden ; 
+    backface-visibility: hidden;
 }
 
 .game-mode .category-card__arrows, .game-mode p {
@@ -372,7 +350,6 @@ input[type=checkbox]{
     width: 300px;
     display: flex;
     justify-content: space-between;
-
 }
 
 .game-button {
@@ -427,8 +404,6 @@ input[type=checkbox]{
 
 .statistic-table thead {
     background: #24943A;
-    background: -moz-linear-gradient(top, #5baf6b 0%, #3a9e4d 66%, #24943A 100%);
-    background: -webkit-linear-gradient(top, #5baf6b 0%, #3a9e4d 66%, #24943A 100%);
     background: linear-gradient(to bottom, #5baf6b 0%, #3a9e4d 66%, #24943A 100%);
     border-bottom: 0px solid #444444;
 }

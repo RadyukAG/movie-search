@@ -2,6 +2,7 @@ import {routes} from './mainData/mainData';
 import Router from './router/router';
 import GameMode from './gameMode/gameMode';
 import '../css/style.css';
+import '../css/normalize';
 
 const statusObject = {
     activePage: 'main',

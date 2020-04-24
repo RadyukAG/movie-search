@@ -23,7 +23,6 @@ export default class GameMode {
             });
             const marksBar = document.querySelector('.marks-bar');
             if(marksBar) {
-                marksBar.innerHTML = '';
                 marksBar.remove();
                 document.querySelector('.buttons-bar').remove();
             }
@@ -38,17 +37,14 @@ export default class GameMode {
     init () {
         this.elements = document.getElementsByClassName('category-card');
             if (this.elements.length > 0) {
-                Array.prototype.forEach.call(this.elements, el => {
-                    el.classList.add('game-mode');
-                });
                 this.createMarksBar(this.elements[0]);
                 this.createButtons(this.elements);
             } else {
                 this.elements = document.getElementsByClassName('main-card');
-                Array.prototype.forEach.call(this.elements, el => {
-                    el.classList.add('game-mode');
-                });
             }
+            Array.prototype.forEach.call(this.elements, el => {
+                el.classList.add('game-mode');
+            });
     }
 
     createMarksBar (element) {
@@ -89,7 +85,7 @@ export default class GameMode {
     }
 
     startGame (elements) {
-        if (document.querySelector('.marks-bar') === null) {
+        if (!document.querySelector('.marks-bar')) {
             this.createMarksBar(elements[0]);
         }
         this.wrongAnswerHandler = this.wrongAnswer.bind(this);
@@ -98,7 +94,7 @@ export default class GameMode {
             el.addEventListener ('click', this.wrongAnswerHandler);
         });    
         this.gameArray = Array.from(elements);
-        this.gameArray = this.gameArray.sort( () => {
+        this.gameArray.sort( () => {
         return 0.5 - Math.random();
         });
         this.gameStep(this.gameArray)
@@ -168,7 +164,7 @@ export default class GameMode {
         const link = document.createElement('a');
         link.href = '#/';
         link.classList.add('final-image');
-        marks.length ? link.classList.add('final-image_loose') : link.classList.add('final-image_win');
+        link.classList.add(marks.length ? 'final-image_loose' : 'final-image_win');
         this.mainContainer.append(link);
         const sound = link.classList.contains('final-image_win') ? new Audio('../../audio/game sounds/win.mp3') : new Audio('../../audio/game sounds/loose.mp3')
         sound.play();
