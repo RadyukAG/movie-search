@@ -9,19 +9,11 @@ const isDev = ENV === 'dev';
 const isProd = ENV === 'build';
 
 function setDevTool() {
-  if (isDev) {
-    return 'cheap-module-eval-source-map';
-  } else {
-    return 'none';
-  }
+  return isDev ? 'cheap-module-eval-source-map' : 'none'
 }
 
 function setDMode() {
-  if (isProd) {
-    return 'production';
-  } else {
-    return 'development';
-  }
+  return isProd ? 'production' : 'development'
 }
 
 const config = {
@@ -141,7 +133,7 @@ const config = {
       filename: 'style.css',
     }),
     new HtmlWebPackPlugin({
-      template: './src/index.html',
+      template: './index.html',
       filename: './index.html'
     }),
     new CopyWebpackPlugin([
