@@ -18,7 +18,11 @@ html {
 
 .container {
     margin: 0 auto;
-    max-width: 1400px;
+    max-width: 1300px;
+}
+
+@media (min-width: 300px) and (max-width: 768px) {
+
 }
 
 .search-form {
@@ -53,6 +57,46 @@ html {
     line-height: 1.8rem;
     user-select: none;
     cursor: pointer;
+}
+
+.slider-container {
+    position: relative;
+}
+
+.swiper-container {
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    background-color: #FDF6E3;
+}
+
+.swiper-wrapper {
+    margin-bottom: 30px !important;
+}
+
+.swiper-slide div {
+    display: flex;
+    flex-direction: column;
+    font-size: 1.6rem;
+    margin: 0 auto;
+    width: fit-content;
+}
+
+.swiper-slide__title {
+    max-width: 220px;
+}
+
+.swiper-slide__year {
+    max-width: 220px;
+}
+
+.swiper-slide__rate {
+    max-width: 220px;
+}
+
+.swiper-slide__poster {
+    width: 220px;
+    height: 350px;
 }
 
 .main-footer {
