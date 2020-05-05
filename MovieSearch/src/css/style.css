@@ -18,14 +18,12 @@ html {
 
 .container {
     margin: 0 auto;
+    padding: 0 20px;
     max-width: 1300px;
 }
 
-@media (min-width: 300px) and (max-width: 768px) {
-
-}
-
 .search-form {
+    margin-bottom: 30px;
     display: flex;
     position: relative;
     justify-content: space-between;
@@ -59,7 +57,19 @@ html {
     cursor: pointer;
 }
 
+.loading-icon {
+    position: absolute;
+    right: 1px;
+    top: 1px;
+    width: 50px;
+    height: 50px;
+    background: url(../img/spinner.gif) no-repeat;
+    background-size: 100% 100%;
+    z-index: 10;
+}
+
 .slider-container {
+    margin-bottom: 30px;
     position: relative;
 }
 
@@ -70,9 +80,28 @@ html {
     background-color: #FDF6E3;
 }
 
+@media (min-width: 640px) and (max-width: 850px) {
+    .swiper-container {
+        width: 80%;
+    }
+}
+
+@media (min-width: 420px) and (max-width: 639px) {
+    .swiper-container {
+        width: 70%;
+    }
+}
+
+@media (min-width: 320px) and (max-width: 419px) {
+    .swiper-container {
+        width: 80%;
+    }
+}
+
 .swiper-wrapper {
     margin-bottom: 30px !important;
 }
+
 
 .swiper-slide div {
     display: flex;
@@ -97,16 +126,53 @@ html {
 .swiper-slide__poster {
     width: 220px;
     height: 350px;
+    object-fit: cover;
+}
+
+@media (min-width: 640px) and (max-width: 850px) {
+    .swiper-button-next.custom-next-button {
+        right: 20px;
+    }
+
+    .swiper-button-prev.custom-prev-button {
+        left: 20px;
+    }
+}
+
+@media (min-width: 420px) and (max-width: 639px) {
+    .swiper-button-next.custom-next-button {
+        right: 20px;
+    }
+
+    .swiper-button-prev.custom-prev-button {
+        left: 20px;
+    }
+}
+
+@media (min-width: 320px) and (max-width: 419px) {
+    .swiper-button-next.custom-next-button {
+        right: -5px;
+    }
+
+    .swiper-button-prev.custom-prev-button {
+        left: -5px;
+    }
 }
 
 .main-footer {
-
     background-color:  #073642;
 }
 
 .main-footer .container {
     display: flex;
     justify-content: space-between;
+}
+
+@media (min-width: 320px) and (max-width: 400px) {
+    .main-footer .container {
+        flex-direction: column;
+        align-items: center;
+    }
 }
 
 .main-footer__link {

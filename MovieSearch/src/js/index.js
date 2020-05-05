@@ -1,6 +1,7 @@
 import Swiper from 'swiper/js/swiper.min';
 import '../swiper/css/swiper.min.css';
 import defaultSlidesArray from "./defaultSlidesData/defaultSlideData";
+import GetDataFromOMDb from './getRateFromOMDb/GetDataFromOmdb';
 
 import '../css/normalize.css';
 import '../css/style.css';
@@ -21,7 +22,7 @@ const mySwiper = new Swiper('.swiper-container', {
     320: {
       slidesPerView: 1,
     },
-    // when window width is >= 480px
+    // when window width is >= 640px
     640: {
       slidesPerView: 2,
       spaceBetween: 20,
@@ -36,7 +37,16 @@ const mySwiper = new Swiper('.swiper-container', {
     }
   }
 });
-
+const APIurl = 'http://www.omdbapi.com/?';
+const APIkey = '&apikey=bd3c609';
+const elements = {
+    input: document.querySelector('.search-form__input'),
+    searchForm: document.querySelector('.search-form'),
+    clearIcon: document.querySelector('.clear-icon'),
+    keyboardIcon: document.querySelector('.keyboard-icon'),
+    slides: document.getElementsByClassName('swiper-slide'),
+    swiperWrapper: document.querySelector('.swiper-wrapper'),
+}
 function createSlide (obj) {
     const slideContent = document.createElement('div');
     slideContent.insertAdjacentHTML('beforeend', `<a class="swiper-slide__title" href="https://www.imdb.com/title/${obj.imdbID}/videogallery">${obj.Title}</a>`);
@@ -50,54 +60,43 @@ function createSlide (obj) {
     mySwiper.update();
 }
 
-function addSlides(array) {
-    mySwiper.removeAllSlides();
+function addSlides(array, isNextPage) {
+    if (array.length < 4 && elements.swiperWrapper.style.justifyContent !== 'center') {
+        elements.swiperWrapper.style.justifyContent = 'center';
+    } else {
+        elements.swiperWrapper.style.justifyContent = null;
+    }
+    if (!isNextPage) {
+        mySwiper.removeAllSlides();
+    }
     array.forEach(el => {
         createSlide(el);
     });
 }
 
 addSlides(defaultSlidesArray);
+const getDataFromOMDb = new GetDataFromOMDb (addSlides, APIkey, APIurl);
 
-const APIurl = 'http://www.omdbapi.com/?';
-const APIkey = '&apikey=bd3c609';
-const elements = {
-    input: document.querySelector('.search-form__input'),
-    searchForm: document.querySelector('.search-form'),
-    clearIcon: document.querySelector('.clear-icon'),
-    keyboardIcon: document.querySelector('.keyboard-icon'),
-}
-
-
-
-function getRateFromOMDB (array) {
-    function requestRate (elem) {
-        const rateRequest = `${APIurl}i=${elem.imdbID}${APIkey}`;
-        return fetch (rateRequest)
-            .then(response => response.json())
-            .then(detailedMovieData => detailedMovieData.Ratings[0].Value)
-            .then(async function addRate(rateString) {
-                elem.rate = rateString.slice(0, -3);
-                return elem;
-            });
-    }
-    return Promise.all(array.map(el => requestRate(el)));
-}
-
-function getSearchResultsFromOMDB (data) {
-    const request = `${APIurl}s=${data}${APIkey}`;
-    fetch (request)
-        .then(response => response.json())
-        .then(object => object.Search)
-        .then(array => getRateFromOMDB(array))
-        .then(array => addSlides(array))
-        .catch(error => console.log(error));
-}
-
-async function formSubmitHandler(e) {
+function formSubmitHandler(e) {
     e.preventDefault();
     const searchRequest = elements.input.value;
-    getSearchResultsFromOMDB(searchRequest);
+    getDataFromOMDb.getSearchResultsFromOMDB(searchRequest);
 }
 
 elements.searchForm.addEventListener('submit', formSubmitHandler);
+mySwiper.on('slideChange', function loadNextTenSlides() {
+   const activeSlide = document.querySelector('.swiper-slide-active');
+   console.log(Array.prototype.indexOf.call(elements.slides, activeSlide));
+   if (activeSlide && elements.slides.length - Array.prototype.indexOf.call(elements.slides, activeSlide) < 7) {
+    console.log('test');
+    getDataFromOMDb.getSearchResultsFromOMDB('next page');
+   }
+});
+
+function setDataLoadingState() {
+
+}
+
+function removeDataLoadingState() {
+    
+}
