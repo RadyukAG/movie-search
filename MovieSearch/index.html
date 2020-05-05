@@ -12,21 +12,19 @@
   </header>
   <main class="container">
     <form class="search-form">
-      <input class="search-form__input" class="type="text" placeholder="Enter Movie Title" autofocus>
+      <input class="search-form__input" type="text" placeholder="Enter Movie Title" autofocus autocomplete="off">
       <button class="button">Search</button>
+      <span class="loading-icon hidden"></span>
       <span class="clear-icon"></span>
       <span class="keyboard-icon"></span>
     </form>
     <div class="info-lane">
-    <p></p>
+      <p></p>
     </div>
     <div class="slider-container">
       <div class="swiper-container">
-        <div class="swiper-wrapper">
-          
-        </div>
+        <div class="swiper-wrapper"></div>
         <div class="swiper-pagination"></div>
-        <!-- Add Arrows -->
       </div>
       <div class="swiper-button-next custom-next-button"></div>
       <div class="swiper-button-prev custom-prev-button"></div>
