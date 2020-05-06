@@ -1,15 +1,12 @@
-import Swiper from 'swiper/js/swiper.min';
+import Swiper from '../swiper/js/swiper.min';
 import '../swiper/css/swiper.min.css';
 import defaultSlidesArray from "./defaultSlidesData/defaultSlideData";
 import GetDataFromOMDb from './getRateFromOMDb/GetDataFromOmdb';
+import getTranslation from './translateRequest/translateRequest';
 
 import '../css/normalize.css';
 import '../css/style.css';
 
-const APIData = {
-    APIurl: 'http://www.omdbapi.com/?',
-    APIkey: '&apikey=bd3c609',
-}
 const elements = {
     input: document.querySelector('.search-form__input'),
     searchForm: document.querySelector('.search-form'),
@@ -51,11 +48,18 @@ const elements = {
       }
     }),
 }
-function createSlide (obj) {
+function loadPosterImage(img, src) {
+    img.src = src;
+    img.onload
+}
+async function createSlide (obj) {
     const slideContent = document.createElement('div');
     slideContent.insertAdjacentHTML('beforeend', `<a class="swiper-slide__title" href="https://www.imdb.com/title/${obj.imdbID}/videogallery">${obj.Title}</a>`);
+   // const poster = document.createElement('img');
+   // poster.classList.add('swiper-slide__poster');
+   // poster.src = obj.Poster === 'N/a' ? 'src/img/no-poster.jpg' : await loadPosterImage(poster, obj.Poster);
     slideContent.insertAdjacentHTML('beforeend', `<img class="swiper-slide__poster" src="${obj.Poster}">`);
-    slideContent.insertAdjacentHTML('beforeend', `<p class="swiper-slide__year">${obj.Year}</p>`);
+    slideContent.insertAdjacentHTML('beforeend', `<p class="swiper-slide__year">Year: ${obj.Year}</p>`);
     slideContent.insertAdjacentHTML('beforeend', `<p class="swiper-slide__rate">${obj.rate}</p>`);
     const slide = document.createElement('div');
     slide.classList.add('swiper-slide');
@@ -73,7 +77,6 @@ function addSlides(array, isNextPage) {
             elements.swiperWrapper.style.justifyContent = null;
         }
     }
-
     if (array.length > 0) {
         array.forEach(el => {
             createSlide(el);
@@ -82,7 +85,7 @@ function addSlides(array, isNextPage) {
 }
 
 addSlides(defaultSlidesArray);
-const getDataFromOMDb = new GetDataFromOMDb (addSlides, APIData, elements);
+const getDataFromOMDb = new GetDataFromOMDb (addSlides, elements, getTranslation);
 
 function formSubmitHandler(e) {
     e.preventDefault();

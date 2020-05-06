@@ -1,10 +1,11 @@
 export default class GetDataFromOMDb {
-    constructor (func, {APIkey, APIurl}, elements) {
+    constructor (func, elements, translateRequest) {
         this.pageNumber = 1;
         this.addSlides = func;
-        this.APIkey = APIkey;
-        this.APIurl = APIurl;
+        this.APIkey = '&apikey=bd3c609';
+        this.APIurl = 'http://www.omdbapi.com/?';
         this.elements = elements;
+        this.getTranslation = translateRequest;
     }
 
     setDataLoadingState() {
@@ -51,40 +52,46 @@ export default class GetDataFromOMDb {
             default: 
             this.elements.message.innerText = error.toString();
         }
+        console.log('test');
         this.removeDataLoadingState();
         this.isNextPage = false;
     }
 
-    translateRequest(request) {
-        if 
-    }
-
-    getSearchResultsFromOMDB (request) {
-        this.elements.message.innerText = '';
-        let OMDbRequest = this.translateRequest(request);
-        this.setDataLoadingState();
-        if (OMDbRequest === 'next page') {
+    async formingRequest (request) {
+        if (request === 'next page') {
             this.pageNumber += 1;
             this.isNextPage = true;
-            OMDbRequest = `${this.APIurl}s=${this.userRequest}&page=${this.pageNumber}${this.APIkey}`
-        } else {
+            return `${this.APIurl}s=${this.userRequest}&page=${this.pageNumber}${this.APIkey}`
+        } 
             this.pageNumber = 1;
-            this.userRequest = OMDbRequest;
+            this.userRequest = await this.getTranslation(request);
+            if (this.userRequest !== request) {
+                console.log('test');
+                this.elements.message.innerText = `Showing results for ${this.userRequest}`;
+            } 
             this.isNextPage = false;
-            OMDbRequest = `${this.APIurl}s=${this.userRequest}${this.APIkey}`;
-        }
-            fetch (OMDbRequest)
-                .then(response => response.json())
-                .then(object => {
-                    if (object.Error) {
-                        throw new Error (object.Error);
-                    }
-                    return object.Search.filter(el => el.Type === 'movie');
-                })
-                .then(array => this.getRateFromOMDB(array))
-                .then(array => this.addSlides(array, this.isNextPage))
-                .then(() => this.loadNextTenSlides())
-                .then(() => this.removeDataLoadingState())
-                .catch((error) => this.errorHandler(error))   
+            return `${this.APIurl}s=${this.userRequest}${this.APIkey}`;
+    }
+
+    async getSearchResultsFromOMDB (request) {
+        this.elements.message.innerText = '';
+        this.setDataLoadingState();
+        try {
+            const OMDbRequest = await this.formingRequest(request);
+                fetch (OMDbRequest)
+                    .then(response => response.json())
+                    .then(object => {
+                        if (object.Error) {
+                            throw new Error (object.Error);
+                        }
+                        return object.Search.filter(el => el.Type === 'movie');
+                    })
+                    .then(array => this.getRateFromOMDB(array))
+                    .then(array => this.addSlides(array, this.isNextPage))
+                    .then(() => this.loadNextTenSlides())
+                    .then(() => this.removeDataLoadingState())
+            } catch (error) {
+                this.errorHandler(error)
+            }          
     }
 }

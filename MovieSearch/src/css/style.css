@@ -33,13 +33,12 @@ html {
     width: 100%;
     margin-right: 20px;
     box-sizing: border-box;
-    border: 1px solid transparent;
-    transition: outline 0.6s ease;
+    border: 2px solid #2980B9;
     padding: 10px 30px;
 }
 
 .search-form__input:focus {
-    outline: 2px solid #2980B9;
+   
 }
 
 .button {
@@ -57,15 +56,47 @@ html {
     cursor: pointer;
 }
 
+.info-lane {
+    height: 40px;
+    display: flex;
+    justify-content: center;
+}
+
+.info-lane p {
+    display: inline-block;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .loading-icon {
     position: absolute;
-    right: 1px;
-    top: 1px;
+    right: 103px;
+    top: -4px;
     width: 50px;
     height: 50px;
     background: url(../img/spinner.gif) no-repeat;
     background-size: 100% 100%;
-    z-index: 10;
+}
+
+.clear-icon {
+    position: absolute;
+    right: 140px;
+    top: -4px;
+    width: 40px;
+    height: 40px;
+    background: url(../img/clear.svg) no-repeat;
+    background-size: 100% 100%;
+}
+
+.keyboard-icon {
+    position: absolute;
+    right: 186px;
+    top: -4px;
+    width: 50px;
+    height: 50px;
+    background: url(../img/keyboard.svg) no-repeat;
+    background-size: 100% 100%;
 }
 
 .hidden {
