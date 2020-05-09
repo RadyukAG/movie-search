@@ -2,7 +2,7 @@ export default class GetDataFromOMDb {
     constructor (func, elements, translateRequest) {
         this.pageNumber = 1;
         this.addSlides = func;
-        this.APIkey = '&apikey=bd3c609';
+        this.APIkey = '&apikey=492b206'; // bd3c609
         this.APIurl = 'http://www.omdbapi.com/?';
         this.elements = elements;
         this.getTranslation = translateRequest;
@@ -37,6 +37,9 @@ export default class GetDataFromOMDb {
     }
 
     loadNextTenSlides() {
+        if (this.elements.message.innerText === 'This is your watchlist!') {
+            return
+        }
         const activeSlide = document.querySelector('.swiper-slide-active');
         const that = this;
         if (activeSlide && that.elements.slides.length - Array.prototype.indexOf.call(that.elements.slides, activeSlide) < 10 || that.elements.slides.length < 10) {
@@ -49,10 +52,12 @@ export default class GetDataFromOMDb {
             case 'Error: Movie not found!':
                 this.elements.message.innerText = !this.isNextPage ? `No results for ${this.userRequest}` : 'There are all movies we found!';
                 break;
+            case 'Error: Request limit reached!':
+                this.elements.message.innerText = 'Request limit reached! Please, try again tomorrow';
+                break;
             default: 
             this.elements.message.innerText = error.toString();
         }
-        console.log('test');
         this.removeDataLoadingState();
         this.isNextPage = false;
     }
@@ -66,7 +71,6 @@ export default class GetDataFromOMDb {
             this.pageNumber = 1;
             this.userRequest = await this.getTranslation(request);
             if (this.userRequest !== request) {
-                console.log('test');
                 this.elements.message.innerText = `Showing results for ${this.userRequest}`;
             } 
             this.isNextPage = false;
@@ -76,22 +80,22 @@ export default class GetDataFromOMDb {
     async getSearchResultsFromOMDB (request) {
         this.elements.message.innerText = '';
         this.setDataLoadingState();
-        try {
-            const OMDbRequest = await this.formingRequest(request);
-                fetch (OMDbRequest)
-                    .then(response => response.json())
-                    .then(object => {
-                        if (object.Error) {
-                            throw new Error (object.Error);
-                        }
-                        return object.Search.filter(el => el.Type === 'movie');
-                    })
-                    .then(array => this.getRateFromOMDB(array))
-                    .then(array => this.addSlides(array, this.isNextPage))
-                    .then(() => this.loadNextTenSlides())
-                    .then(() => this.removeDataLoadingState())
-            } catch (error) {
-                this.errorHandler(error)
-            }          
+        const OMDbRequest = await this.formingRequest(request);
+            fetch (OMDbRequest)
+                .then(response => response.json())
+                .then(object => {
+                    if (object.Error) {
+                        throw new Error (object.Error);
+                    }
+                    return object.Search.filter(el => el.Type === 'movie').filter((el, i, arr) => {
+                        const elStr = JSON.stringify(el);
+                        return i === arr.findIndex(elem => JSON.stringify(elem) === elStr)
+                    });
+                })
+                .then(array => this.getRateFromOMDB(array))
+                .then(array => this.addSlides(array, this.isNextPage))
+                .then(() => this.loadNextTenSlides())
+                .then(() => this.removeDataLoadingState())
+                .catch((error) => this.errorHandler(error))  
     }
 }

@@ -137,7 +137,6 @@ html {
     margin-bottom: 30px !important;
 }
 
-
 .swiper-slide div {
     display: flex;
     flex-direction: column;
@@ -161,7 +160,16 @@ html {
 .swiper-slide__poster {
     width: 220px;
     height: 350px;
-    object-fit: contain;
+    object-fit: cover;
+}
+
+.swiper-slide__poster.no-poster {
+    background: url() no-repeat;
+    background-size: 100% 100%;
+}
+
+.add-to-watchlist-button {
+    height: 30px;
 }
 
 .swiper-button-next,
@@ -197,6 +205,10 @@ html {
     .swiper-button-prev.custom-prev-button {
         left: -5px;
     }
+}
+
+.show-watchlist-button {
+    margin: 0 auto;
 }
 
 .main-footer {
