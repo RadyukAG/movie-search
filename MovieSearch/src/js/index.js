@@ -86,7 +86,10 @@ function shiftMode (e) {
 shiftMode(elements.shift);
 elements.keyboard.addEventListener('click', e => {
     if (e.target.dataset.keyCode || e.target.closest('div').dataset.keyCode) {
-        elements.input.value += e.target.innerText;
+        const pos = elements.input.selectionStart;
+        let text = elements.input.value;
+        text = `${text.slice(0, pos)}${e.target.innerText}${text.slice(pos)}`;
+        elements.input.value = text;
     }
 });
 
@@ -106,8 +109,9 @@ document.onkeydown = e => {
     if (!button) {
         button = Array.prototype.find.call(specButtons, (el => el.dataset.code === e.code));
     }
-    button.classList.add('active');
-    console.log(button);
+    if (button) {
+        button.classList.add('active');
+    }
 }
 
 document.onkeyup = e => {
@@ -115,11 +119,11 @@ document.onkeyup = e => {
         elements.shift.classList.remove('active');
         shiftMode(elements.shift);
     }
-    
-    console.log(e.code)
     let button = Array.prototype.find.call(keyButtons, (el => el.dataset.keyCode === e.code));
     if (!button) {
         button = Array.prototype.find.call(specButtons, (el => el.dataset.code === e.code));
     }
-    button.classList.remove('active');
+    if (button) {
+        button.classList.remove('active');
+    }
 }

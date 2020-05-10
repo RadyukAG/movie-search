@@ -10,7 +10,6 @@ export default class KeyboardButton {
 
     createButton() {
         const button = document.createElement('div');
-
         if (this.buttonHandler) {
             button.addEventListener('click', this.buttonHandler.bind(this));
             button.dataset.code = this.code;

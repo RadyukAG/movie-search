@@ -88,7 +88,7 @@ function ChangeLang (e) {
 }
 
 function Search () {
-    document.querySelector('.search-form').submit();
+    document.querySelector('.search-form .button').click();
 }
 
 export {Backspace, Delete, Shift, Space, ArrowRight, ArrowLeft, ChangeLang, Search}

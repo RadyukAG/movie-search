@@ -4,7 +4,7 @@ export default class GetDataFromOMDb {
     constructor (elements, translateRequest) {
         this.pageNumber = 1;
         this.APIkey = '&apikey=492b206'; // bd3c609
-        this.APIurl = 'http://www.omdbapi.com/?';
+        this.APIurl = 'https://www.omdbapi.com/?';
         this.elements = elements;
         this.getTranslation = translateRequest;
         this.getSearchResultsFromOMDB('casino');
