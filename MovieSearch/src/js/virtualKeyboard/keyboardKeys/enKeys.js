@@ -1,4 +1,6 @@
-export default [
+import {Backspace, Delete} from '../buttonHandlers/buttonHandlers'
+
+const enKeys = [
     {
       main: '`',
       shiftMode: '~',
@@ -68,19 +70,13 @@ export default [
       main: 'Backspace',
       shiftMode: null,
       code: 'Backspace',
-      buttonHandler: 'Backspace',
+      buttonHandler: Backspace,
     },
     {
       main: 'Delete',
       shiftMode: null,
       code: 'Delete',
-      buttonHandler: 'Delete',
-    },
-    {
-      main: 'Tab',
-      shiftMode: null,
-      code: 'Tab',
-      buttonHandler: 'Tab',
+      buttonHandler: Delete,
     },
     {
       main: 'q',
@@ -141,18 +137,6 @@ export default [
       main: ']',
       shiftMode: '}',
       code: 'BracketRight',
-    },
-    {
-      main: 'Enter',
-      shiftMode: null,
-      code: 'Enter',
-      buttonHandler: 'Enter',
-    },
-    {
-      main: 'CapsLock',
-      shiftMode: null,
-      code: 'CapsLock',
-      buttonHandler: 'CapsLock',
     },
     {
       main: 'a',
@@ -342,3 +326,5 @@ export default [
       buttonHandler: 'Win',
     },
   ];
+
+  export default enKeys;

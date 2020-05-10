@@ -1,5 +1,5 @@
-import {enKeys} from "./keyboardKeys/enKeys";
-import {ruKeys} from "./keyboardKeys/ruKeys";
+import enKeys from "./keyboardKeys/enKeys";
+import ruKeys from "./keyboardKeys/ruKeys";
 import KeyboardButton from "./createButton/createButton";
 
 /*
@@ -203,99 +203,7 @@ class Keyboard {
             }
         }
     }
-    buttonUp (e) {
-        !e.preventDefault ? false : e.preventDefault();
-        const char = e.key;
-        const keyCode = e.keyCode;
-        if (char.length > 1 || char === ' ') {
-            let code;
-            if (e.location) {
-                code = (e.location > 1) ? +parseInt(keyCode).toString(2) : keyCode;
-            } else {
-                code = keyCode;
-            }
-            this.specButtons[this.specButtonsElements[code]].classList.remove('active');
-        } else {
-            this.digitsNLetters[this.mainSort[char.toLowerCase()]] ? this.digitsNLetters[this.mainSort[char.toLowerCase()]].classList.remove('active') : 
-            this.digitsNLetters[this.altSort[char]] ? this.digitsNLetters[this.altSort[char]].classList.remove('active') : false;
-        }
-        if (keyCode == 16) {
-            this.shift = false;
-            this.shiftModeOff();
-        }
-        if (keyCode === 18) {
-            this.alt = false;
-        }
-    }
 
-    specButtonEffect(code, eventCode) {
-        switch (parseInt(code)) {
-            case 8:
-                this.backspaceEffect();
-                break;
-            case 9:
-                this.tabEffect();
-                break;
-            case 46:
-                this.delEffect();
-                break;
-            case 20:
-                this.capsLockEffect();
-                break;
-            case 13:
-                this.enterEffect();
-                break;
-            case 16:
-                eventCode === 'ShiftRight' ? this.rightShiftEffect():this.leftShiftEffect();
-                break;
-            case 17: 
-                eventCode === 'ControlRight' ? this.rightCtrlEffect():this.leftCtrlEffect();
-                break;
-            case 91:
-                this.winEffect();
-                break;
-            case 18:
-                eventCode === 'AltLeft' ? this.leftAltEffect():this.rightAltEffect();
-                break;
-            case 32:
-                this.spaceEffect();
-                break;
-            case 37:
-                this.leftArrowEffect();
-                break;
-            case 38:
-                this.upArrowEffect();
-                break;
-            case 40:
-                this.downArrowEffect();
-                break;
-            case 39:
-                this.rightArrowEffect();
-                break;                                        
-        }
-    }
-    backspaceEffect(){
-        this.specButtons[this.specButtonsElements[8]].classList.add('active');
-        const {value: value, selectionStart: start, selectionEnd: end} = this.inputField;
-        if (start === end) {
-            this.inputField.value = `${value.slice(0, start - 1)}${value.slice(end)}`;
-            this.moveCursorTo(start-1);
-        } else {
-            this.inputField.value = `${value.slice(0, start)}${value.slice(end)}`;
-            this.moveCursorTo(start);
-        }
-    }
-    delEffect() {
-        this.specButtons[this.specButtonsElements[46]].classList.add('active');
-        const {value: value, selectionStart: start, selectionEnd: end} = this.inputField;
-        if (start === end) {
-            this.inputField.value = `${value.slice(0, start)}${value.slice(start + 1)}`;
-            this.moveCursorTo(start);
-        } else {
-            this.inputField.value = `${value.slice(0, start)}${value.slice(end)}`;
-            this.moveCursorTo(start);
-        } 
-    }
     moveCursorTo(pos) {
         this.inputField.selectionStart = pos;
         this.inputField.selectionEnd = pos;
@@ -371,26 +279,8 @@ class Keyboard {
             }
         }
     }
-    leftAltEffect () {
-        this.specButtons[this.specButtonsElements[18]].classList.add('active');
-        this.alt = true;
-        if (this.shift) {
-            this.changeLang();
-        }
-    }
-    rightAltEffect() {
-        this.specButtons[this.specButtonsElements[10010]].classList.add('active');
-        this.alt = true;
-        if (this.shift) {
-            this.changeLang();
-        }
-    }
-    rightCtrlEffect() {
-        this.specButtons[this.specButtonsElements[10001]].classList.add('active');
-    }
-    leftCtrlEffect() {
-        this.specButtons[this.specButtonsElements[17]].classList.add('active');
-    }
+
+
     changeLang() {
         this.langRus = this.langRus === 'true' ? 'false' : 'true';
         localStorage.setItem('langRus', this.langRus);
@@ -416,44 +306,7 @@ class Keyboard {
             }
         }
     }
-    spaceEffect() {
-        this.specButtons[this.specButtonsElements[32]].classList.add('active');
-        const {value: value, selectionStart: start, selectionEnd: end} = this.inputField;
-        this.inputField.value = `${value.slice(0, start)}\xa0${value.slice(end)}`;
-        this.moveCursorTo(start+1);
-    }
-    leftArrowEffect() {
-        this.specButtons[this.specButtonsElements[37]].classList.add('active');
-        const {selectionStart: start} = this.inputField;
-        this.inputField.focus();
-        if (start > 0) {
-        this.moveCursorTo(start-1);
-        } else {
-            return
-        }
-    }
-    rightArrowEffect() {
-        this.specButtons[this.specButtonsElements[39]].classList.add('active');
-        const {selectionStart: start, value: value} = this.inputField;
-        this.inputField.focus();
-        if (start < value.length) {
-        this.moveCursorTo(start+1);
-        } else {
-            return
-        }
-    }
-    upArrowEffect() {
-        this.specButtons[this.specButtonsElements[38]].classList.add('active');
-        this.moveCursorTo(0);
-    }
-    downArrowEffect() {
-        this.specButtons[this.specButtonsElements[40]].classList.add('active');
-        const value = this.inputField.value;
-        this.moveCursorTo(value.length);
-    }
-}
-const keyboard = new Keyboard;
-keyboard.addMainElementAndClasses();
+
 */
 
 const rowsOrder = [
@@ -464,13 +317,15 @@ const rowsOrder = [
     ['ControlLeft', 'Win', 'AltLeft', 'Space', 'AltRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight', 'ControlRight'],
   ];
 
-function createKeyboard(order) {
-    const keyboard = document.createElement('div');
-    keyboard.classList.add('keyboard');
-    const header = document.createElement('div');
-    header.classList.add('keyboard__header');
-    header.insertAdjacentElement('afterbegin', '<p class="keyboard__title">Virtual keyboard</p><span class="keyboard__close-button"></span>');
-
+export default function createKeyboard(method) {
+    const keyboard = method('div', 'keyboard');
+    const header = method('div', 'keyboard__header');
+    header.insertAdjacentHTML('afterbegin', '<p class="keyboard__title">Virtual keyboard</p><span class="keyboard__close-button"></span>');
+   // header.insertAdjacentElement('beforeend', '');
+    keyboard.append(header);
+    const buttonsContainer = method('div', 'buttons-container');
+    createRows(rowsOrder, buttonsContainer);
+    keyboard.append(buttonsContainer);
 }
 
 function createRows (rowsArray, container) {
@@ -479,14 +334,12 @@ function createRows (rowsArray, container) {
         const keyboardRow = document.createElement('div');
         keyboardRow.classList.add('keyboard__row');
         keyboardRow.append(...el.map(key => {
-            const keyboardButton = new KeyboardButton(enKeys.find(el => el.code === key));
+            console.log(enKeys);
+            const keyboardButton = new KeyboardButton(enKeys.find(elem => elem.code === key));
             const button = keyboardButton.createButton();
             keyButtons.push();
             return button;
         }));
+        container.append(keyboardRow);
     });
-    return keyButtons;
 }
-
-const cont = document.createElement('div');
-console.log(createRows(rowsOrder, cont));

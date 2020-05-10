@@ -8,18 +8,14 @@ export default class GetDataFromOMDb {
         this.getTranslation = translateRequest;
     }
 
-    setDataLoadingState() {
+    toggleDataLoadingState() {
         if (this.elements.loadingIcon.classList.contains('hidden')) {
             this.elements.loadingIcon.classList.remove('hidden');
-        }
-        this.elements.mySwiper.allowSlideNext = false;
-    }
-    
-    removeDataLoadingState() {
-        if (!this.elements.loadingIcon.classList.contains('hidden')) {
+            this.elements.mySwiper.allowSlideNext = false;
+        } else {
             this.elements.loadingIcon.classList.add('hidden');
+            this.elements.mySwiper.allowSlideNext = true;    
         }
-        this.elements.mySwiper.allowSlideNext = true;    
     }
 
     getRateFromOMDB (array) {
@@ -29,7 +25,8 @@ export default class GetDataFromOMDb {
                 .then(response => response.json())
                 .then(detailedMovieData => detailedMovieData.Ratings[0] ? detailedMovieData.Ratings[0].Value : 'N/A')
                 .then(async function addRate(rateString) {
-                    elem.rate = rateString.slice(0, -3);
+                    elem.rate = rateString.length > 4 ? rateString.slice(0, -3) : rateString;
+
                     return elem;
                 });
         }
@@ -58,7 +55,7 @@ export default class GetDataFromOMDb {
             default: 
             this.elements.message.innerText = error.toString();
         }
-        this.removeDataLoadingState();
+        this.toggleDataLoadingState();
         this.isNextPage = false;
     }
 
@@ -78,8 +75,11 @@ export default class GetDataFromOMDb {
     }
 
     async getSearchResultsFromOMDB (request) {
+        if (this.pageNumber >= this.pages) {
+            return
+        }
         this.elements.message.innerText = '';
-        this.setDataLoadingState();
+        this.toggleDataLoadingState();
         const OMDbRequest = await this.formingRequest(request);
             fetch (OMDbRequest)
                 .then(response => response.json())
@@ -88,6 +88,7 @@ export default class GetDataFromOMDb {
                         throw new Error (object.Error);
                     }
                     return object.Search.filter(el => el.Type === 'movie').filter((el, i, arr) => {
+                        this.pages = Math.ceil(parseInt(object.totalResults, 10) / 10);
                         const elStr = JSON.stringify(el);
                         return i === arr.findIndex(elem => JSON.stringify(elem) === elStr)
                     });
@@ -95,7 +96,7 @@ export default class GetDataFromOMDb {
                 .then(array => this.getRateFromOMDB(array))
                 .then(array => this.addSlides(array, this.isNextPage))
                 .then(() => this.loadNextTenSlides())
-                .then(() => this.removeDataLoadingState())
+                .then(() => this.toggleDataLoadingState())
                 .catch((error) => this.errorHandler(error))  
     }
 }

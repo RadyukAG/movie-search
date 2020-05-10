@@ -3,6 +3,7 @@ import '../swiper/css/swiper.min.css';
 import defaultSlidesArray from "./defaultSlidesData/defaultSlideData";
 import GetDataFromOMDb from './getRateFromOMDb/GetDataFromOmdb';
 import getTranslation from './translateRequest/translateRequest';
+// import createKeyboard from './virtualKeyboard/index';
 
 import '../css/normalize.css';
 import '../css/style.css';
@@ -59,8 +60,7 @@ const createPoster = src => {
     return new Promise(resolve => {
         const poster = createElement('img', 'swiper-slide__poster');
         poster.onerror = () => {
-            poster.src = '';
-            poster.classList.add('no-poster');
+            poster.src = '../img/no-poster.png';
             resolve(poster);
         }
         poster.onload = () => resolve(poster)
@@ -135,6 +135,10 @@ function addSlides(array, isNextPage) {
 
 addSlides(defaultSlidesArray);
 const getDataFromOMDb = new GetDataFromOMDb (addSlides, elements, getTranslation);
+function clearInput () {
+    elements.input.value = '';
+    elements.input.focus();
+}
 
 function formSubmitHandler(e) {
     e.preventDefault();
@@ -162,4 +166,5 @@ function showWatchlist () {
 elements.searchForm.addEventListener('submit', formSubmitHandler);
 elements.mySwiper.on('slideChange', getDataFromOMDb.loadNextTenSlides.bind(getDataFromOMDb));
 elements.showWatchlist.addEventListener('click', showWatchlist);
-
+elements.clearIcon.addEventListener('click', clearInput);
+// createKeyboard(createElement);
