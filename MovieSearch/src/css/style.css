@@ -24,6 +24,7 @@ html {
 }
 
 .container {
+    position: relative;
     margin: 0 auto;
     padding: 0 20px;
     max-width: 1300px;
@@ -113,10 +114,6 @@ html {
 .clear-icon:hover,
 .keyboard-icon:hover {
     opacity: 0.6;
-}
-
-.hidden {
-    display: none;
 }
 
 @media (max-width: 500px) {
@@ -320,14 +317,101 @@ html {
 
 .keyboard {
     position: absolute;
-    bottom: 1px;
-    right: 1px;
+    top: 50px;
+    right: 20px;
     width: 495px;
-    height: 195px;
     padding: 10px;
-}
-
-.key {
+    display: grid;
+    grid-row-gap: 10px;
+    border: 1px solid;
+    overflow: hidden;
+    border-radius: 5px;
+    border: 3px solid #222;
+    background-color: #fdf6e3;
+    z-index: 10;
+  }
+  
+  .keyboard__row {
+    display: flex;
+    grid-gap: 10px;
+    grid-row-gap: 10px;
+    height: 50px;
+  }
+  
+  .key {
+    display: flex;
+    margin-right: 5px;
     width: 29px;
     height: 29px;
+    background-color: #839496;
+    border-radius: 3px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: all .2s ease;
+    user-select: none;
+    transition: all .2s ease;
+    cursor: pointer;
+  }
+
+.key.active {
+    transform: translateY(3px);
+}
+
+@media (max-width: 559px) {
+    .keyboard {
+        display: none;
+    }
+}
+
+[data-code="ShiftLeft"] {
+    width: 117px;
+    background-image: url(../img/shift.png);
+    background-repeat: no-repeat;
+    background-size: 39% 100%;
+    background-position: center;
+}
+
+[data-code="ShiftLeft"].active {
+    background-color: #949683;
+}
+
+[data-code="Delete"] {
+width: 50px;
+}
+
+[data-code="Backspace"] {
+width: 84px;
+}
+
+[data-code="Search"] {
+    width: 85px;
+}
+
+[data-code="ChangeLang"] {
+    width: 120px;
+}
+
+[data-code="Space"] {
+    width: 205px;
+}
+
+[data-code="ArrowLeft"] {
+    width: 76px;
+    background-image: url(../img/arrowLeft.png);
+    background-repeat: no-repeat;
+    background-size: 39% 100%;
+    background-position: center;
+}
+
+[data-code="ArrowRight"] {
+width: 76px;
+background-image: url(../img/arrowRight.png);
+background-repeat: no-repeat;
+background-size: 39% 100%;
+background-position: center;
+}
+
+.hidden {
+    display: none;
 }

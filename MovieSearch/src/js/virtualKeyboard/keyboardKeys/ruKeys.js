@@ -300,7 +300,7 @@ export default [
       code: 'ControlRight',
     },
     {
-      main: '&larr;',
+      main: ' ',
       shiftMode: null,
       code: 'ArrowLeft',
     },
@@ -315,7 +315,7 @@ export default [
       code: 'ArrowDown',
     },
     {
-      main: '&rarr;',
+      main: ' ',
       shiftMode: null,
       code: 'ArrowRight',
     },

@@ -1,14 +1,16 @@
-import Swiper from '../swiper/js/swiper.min';
 import '../swiper/css/swiper.min.css';
-import defaultSlidesArray from "./defaultSlidesData/defaultSlideData";
 import GetDataFromOMDb from './getRateFromOMDb/GetDataFromOmdb';
 import getTranslation from './translateRequest/translateRequest';
-// import createKeyboard from './virtualKeyboard/index';
+import createKeyboard from './virtualKeyboard/index';
+import {Shift} from './virtualKeyboard/buttonHandlers/buttonHandlers';
+import createElement from './createElement/createElement';
+import addSlides from './addSlides/addSlides';
+import mySwiper from './createSwiper/createSwiper';
 
 import '../css/normalize.css';
 import '../css/style.css';
-// import { pseudoRandomBytes } from 'crypto';
 
+createKeyboard(createElement);
 const elements = {
     input: document.querySelector('.search-form__input'),
     searchForm: document.querySelector('.search-form'),
@@ -19,122 +21,14 @@ const elements = {
     loadingIcon: document.querySelector('.loading-icon'),
     message: document.querySelector('.info-lane p'),
     showWatchlist: document.querySelector('.show-watchlist-button'),
-    mySwiper: new Swiper('.swiper-container', {
-        slidesPerView: 3,
-        freeMode: true,
-        pagination: {
-            el: '.swiper-pagination',
-            dynamicBullets: true,
-        },
-        navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
-        },
-       breakpoints: {
-        // when window width is >= 320px
-        320: {
-          slidesPerView: 1,
-        },
-        // when window width is >= 640px
-        640: {
-          slidesPerView: 2,
-          spaceBetween: 20,
-        },
-        850: {
-            slidesPerView: 3,
-            spaceBetween: 20,
-          },
-        1100: {
-            slidesPerView: 4,
-            spaceBetween: 20,
-        }
-      }
-    }),
+    keyboard: document.querySelector('.keyboard'),
+    shift: document.querySelector('[data-code="ShiftLeft"]'),
+    mySwiper,
 }
-function createElement(tag, className) {
-    const element = document.createElement(tag);
-    element.classList.add(className);
-    return element;
-}
-const createPoster = src => {
-    return new Promise(resolve => {
-        const poster = createElement('img', 'swiper-slide__poster');
-        poster.onerror = () => {
-            poster.src = '../img/no-poster.png';
-            resolve(poster);
-        }
-        poster.onload = () => resolve(poster)
-        poster.src = src});
-}
-
-function addToOrRemoveFromWatchlist(e) {
-    const slide = e.target.closest('div');
-    const slideObject = {};
-    slideObject.Poster = slide.querySelector('.swiper-slide__poster').src;
-    slideObject.imdbID = slide.querySelector('.swiper-slide__title').href.slice(27, -13);
-    slideObject.Title = slide.querySelector('.swiper-slide__title').innerText;
-    slideObject.Year = slide.querySelector('.swiper-slide__year').innerText;
-    slideObject.rate = slide.querySelector('.swiper-slide__rate').innerText;
-    let watchlist = localStorage.getItem('watchlist') ? JSON.parse(localStorage.getItem('watchlist')) : [];
-    if (e.target.innerText === 'Add to watchlist') {
-        watchlist.push(slideObject);
-    } else {
-        watchlist = watchlist.filter(el => el.imdbID !== slideObject.imdbID);
-        const swiperSlide = e.target.closest('.swiper-slide');
-        const slidesArray = document.querySelectorAll('.swiper-slide')
-        const index = Array.prototype.indexOf.call(slidesArray, swiperSlide);
-        elements.mySwiper.removeSlide(index);
-        elements.mySwiper.update();
-        elements.swiperWrapper.style.justifyContent = slidesArray.length < 4 ? 'center' : null;
-        if (slidesArray.length <= 1) {
-            elements.message.innerText = 'Your watchlist is empty';
-        }
-    }
-    localStorage.setItem('watchlist', JSON.stringify(watchlist));
-}
-
-function createWatchlistButton() {
-    const button = createElement('button', 'add-to-watchlist-button');
-    if (elements.message.innerText === 'This is your watchlist!') {
-        button.innerText = 'Remove from watchlist';
-    } else {
-        button.innerText = 'Add to watchlist';
-    }
-    button.addEventListener('click', addToOrRemoveFromWatchlist);
-    return button;   
-}
-
-async function createSlide (obj) {
-    const slideContent = document.createElement('div');
-    slideContent.append(await createPoster(obj.Poster));
-    slideContent.insertAdjacentHTML('beforeend', `<a class="swiper-slide__title" href="https://www.imdb.com/title/${obj.imdbID}/videogallery">${obj.Title}</a>`);
-    slideContent.insertAdjacentHTML('beforeend', `<p class="swiper-slide__year">Year: ${obj.Year}</p>`);
-    slideContent.insertAdjacentHTML('beforeend', `<p class="swiper-slide__rate">${obj.rate}</p>`);
-    slideContent.append(createWatchlistButton());
-    const slide = createElement('div', 'swiper-slide');
-    slide.append(slideContent);
-    return slide;
-}
-
-function addSlides(array, isNextPage) {
-    if (!isNextPage) {
-        elements.mySwiper.removeAllSlides();
-        elements.swiperWrapper.style.justifyContent = array.length < 4 ? 'center' : null;
-    }
-    if (array.length > 0) {
-        Promise.all(array.map(el => createSlide(el)))
-            .then(slides => {
-                slides.forEach(el => {
-                    elements.mySwiper.appendSlide(el);
-                    elements.mySwiper.update();
-                });
-                return slides;
-            })
-    }
-}
-
-addSlides(defaultSlidesArray);
-const getDataFromOMDb = new GetDataFromOMDb (addSlides, elements, getTranslation);
+elements.keyboard.classList.add('hidden');
+const keyButtons = document.querySelectorAll('[data-key-code]');
+const specButtons = document.querySelectorAll('[data-code]');
+const getDataFromOMDb = new GetDataFromOMDb (elements, getTranslation);
 function clearInput () {
     elements.input.value = '';
     elements.input.focus();
@@ -160,11 +54,72 @@ function showWatchlist () {
     elements.message.innerText = 'This is your watchlist!';
     elements.input.value = '';
     elements.mySwiper.off('slideChange', getDataFromOMDb.loadNextTenSlides.bind(getDataFromOMDb));
-    addSlides(watchlist, false);
+    addSlides(watchlist, false, elements);
 }
+
+function toggleKeyboard () {
+    elements.keyboard.classList.toggle('hidden');
+}
+
+function shiftMode (e) {
+    let target;
+    if (e.target) {
+        target = e.target.dataset.code === 'ShiftLeft' ? e.target : e.target.closest('div');
+    } else {
+        target = e;
+    }
+    const isShift = target.classList.contains('active');
+    if(!isShift) {
+        keyButtons.forEach(el => {
+            el.querySelector('.main').classList.remove('hidden');
+            el.querySelector('.shift-mode').classList.add('hidden');
+        });
+    }
+    else {
+        keyButtons.forEach(el => {
+            el.querySelector('.shift-mode').classList.remove('hidden');
+            el.querySelector('.main').classList.add('hidden');
+        });
+    }
+}
+
+shiftMode(elements.shift);
+elements.keyboard.addEventListener('click', e => {
+    if (e.target.dataset.keyCode || e.target.closest('div').dataset.keyCode) {
+        elements.input.value += e.target.innerText;
+    }
+});
 
 elements.searchForm.addEventListener('submit', formSubmitHandler);
 elements.mySwiper.on('slideChange', getDataFromOMDb.loadNextTenSlides.bind(getDataFromOMDb));
 elements.showWatchlist.addEventListener('click', showWatchlist);
 elements.clearIcon.addEventListener('click', clearInput);
-// createKeyboard(createElement);
+elements.keyboardIcon.addEventListener('click', toggleKeyboard);
+elements.shift.addEventListener('click', shiftMode);
+
+document.onkeydown = e => {
+    if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
+        Shift(elements.shift);
+        shiftMode(elements.shift);
+    }
+    let button = Array.prototype.find.call(keyButtons, (el => el.dataset.keyCode === e.code));
+    if (!button) {
+        button = Array.prototype.find.call(specButtons, (el => el.dataset.code === e.code));
+    }
+    button.classList.add('active');
+    console.log(button);
+}
+
+document.onkeyup = e => {
+    if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
+        elements.shift.classList.remove('active');
+        shiftMode(elements.shift);
+    }
+    
+    console.log(e.code)
+    let button = Array.prototype.find.call(keyButtons, (el => el.dataset.keyCode === e.code));
+    if (!button) {
+        button = Array.prototype.find.call(specButtons, (el => el.dataset.code === e.code));
+    }
+    button.classList.remove('active');
+}

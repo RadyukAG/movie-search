@@ -1,4 +1,4 @@
-import {Backspace, Delete} from '../buttonHandlers/buttonHandlers'
+import {Backspace, Delete, Shift, ArrowRight, ArrowLeft, Space, ChangeLang, Search} from '../buttonHandlers/buttonHandlers'
 
 const enKeys = [
     {
@@ -199,10 +199,10 @@ const enKeys = [
       code: 'Backslash',
     },
     {
-      main: 'Shift',
+      main: ' ',
       shiftMode: null,
       code: 'ShiftLeft',
-      buttonHandler: 'Shift',
+      buttonHandler: Shift,
     },
     {
       main: '<',
@@ -260,70 +260,34 @@ const enKeys = [
       code: 'Slash',
     },
     {
-      main: 'Shift',
+      main: 'Change language',
       shiftMode: null,
-      code: 'ShiftRight',
-      buttonHandler: 'Shift',
-    },
-    {
-      main: 'Ctrl',
-      shiftMode: null,
-      code: 'ControlLeft',
-      buttonHandler: 'Control',
-    },
-    {
-      main: 'Alt',
-      shiftMode: null,
-      code: 'AltLeft',
-      buttonHandler: 'Alt',
+      code: 'ChangeLang',
+      buttonHandler: ChangeLang,
     },
     {
       main: ' ',
       shiftMode: null,
       code: 'Space',
-      buttonHandler: 'Space',
+      buttonHandler: Space,
     },
     {
-      main: 'Alt',
-      shiftMode: null,
-      code: 'AltRight',
-      buttonHandler: 'Alt',
-    },
-    {
-      main: 'Ctrl',
-      shiftMode: null,
-      code: 'ControlRight',
-      buttonHandler: 'Control',
-    },
-    {
-      main: '&larr;',
+      main: ' ',
       shiftMode: null,
       code: 'ArrowLeft',
-      buttonHandler: 'ArrowLeft',
+      buttonHandler: ArrowLeft,
     },
     {
-      main: '&uarr;',
-      shiftMode: null,
-      code: 'ArrowUp',
-      buttonHandler: 'ArrowUp',
-    },
-    {
-      main: '&darr;',
-      shiftMode: null,
-      code: 'ArrowDown',
-      buttonHandler: 'ArrowDown',
-    },
-    {
-      main: '&rarr;',
+      main: ' ',
       shiftMode: null,
       code: 'ArrowRight',
-      buttonHandler: 'ArrowRight',
+      buttonHandler: ArrowRight,
     },
     {
-      main: 'Win',
+      main: 'Search',
       shiftMode: null,
-      code: 'Win',
-      buttonHandler: 'Win',
+      code: 'Search',
+      buttonHandler: Search,
     },
   ];
 

@@ -10,16 +10,21 @@ export default class KeyboardButton {
 
     createButton() {
         const button = document.createElement('div');
-        button.dataset.keyCode = this.code;
+
         if (this.buttonHandler) {
             button.addEventListener('click', this.buttonHandler.bind(this));
+            button.dataset.code = this.code;
         } else {
-            button.classList.add('key');
-            button.appendChild(this.createButtonChild(this.main, 'main'));
-            button.appendChild(this.createButtonChild(this.shiftMode, 'shift-mode'));
+            button.dataset.keyCode = this.code;
         }
+            button.classList.add('key');
+            button.append(this.createButtonChild(this.main, 'main'));
+            if (this.shiftMode) {
+                button.append(this.createButtonChild(this.shiftMode, 'shift-mode'));
+            }    
         return button
     }
+
     createButtonChild (key, classString) {
         const p = document.createElement('p');
         p.innerText = key;

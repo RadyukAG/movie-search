@@ -1,11 +1,13 @@
+import addSlides from '../addSlides/addSlides';
+
 export default class GetDataFromOMDb {
-    constructor (func, elements, translateRequest) {
+    constructor (elements, translateRequest) {
         this.pageNumber = 1;
-        this.addSlides = func;
         this.APIkey = '&apikey=492b206'; // bd3c609
         this.APIurl = 'http://www.omdbapi.com/?';
         this.elements = elements;
         this.getTranslation = translateRequest;
+        this.getSearchResultsFromOMDB('casino');
     }
 
     toggleDataLoadingState() {
@@ -94,7 +96,7 @@ export default class GetDataFromOMDb {
                     });
                 })
                 .then(array => this.getRateFromOMDB(array))
-                .then(array => this.addSlides(array, this.isNextPage))
+                .then(array => addSlides(array, this.isNextPage, this.elements))
                 .then(() => this.loadNextTenSlides())
                 .then(() => this.toggleDataLoadingState())
                 .catch((error) => this.errorHandler(error))  
