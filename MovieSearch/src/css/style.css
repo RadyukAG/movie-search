@@ -223,6 +223,7 @@ html {
     width: 220px;
     height: 350px;
     object-fit: cover;
+    border-radius: 10px;
 }
 
 .add-to-watchlist-button {
@@ -383,7 +384,7 @@ html {
     width: 84px;
 }
 
-[data-code="Search"] {
+[data-code="Enter"] {
     width: 85px;
 }
 

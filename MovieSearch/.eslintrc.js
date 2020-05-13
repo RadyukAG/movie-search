@@ -20,5 +20,6 @@ module.exports = {
         "no-unused-expressions": "off",
         "class-methods-use-this": "off",
         "import/no-cycle": "off",
+        "import/no-unresolved": "off",
     }
 };

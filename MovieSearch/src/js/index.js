@@ -86,10 +86,19 @@ function shiftMode (e) {
 shiftMode(elements.shift);
 elements.keyboard.addEventListener('click', e => {
     if (e.target.dataset.keyCode || e.target.closest('div').dataset.keyCode) {
-        const pos = elements.input.selectionStart;
-        let text = elements.input.value;
+        const target = e.target.dataset.keyCode ? e.target : e.target.closest('div');
+        target.classList.add('active');
+        target.addEventListener('mouseleave', () => {
+            target.classList.remove('active');
+        });
+        const {input} = elements;
+        const pos = input.selectionStart;
+        let text = input.value;
         text = `${text.slice(0, pos)}${e.target.innerText}${text.slice(pos)}`;
-        elements.input.value = text;
+        input.value = text;
+        input.focus();
+        input.selectionStart = pos + 1;
+        input.selectionEnd = pos + 1;
     }
 });
 

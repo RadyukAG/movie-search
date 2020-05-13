@@ -284,9 +284,9 @@ const enKeys = [
       buttonHandler: ArrowRight,
     },
     {
-      main: 'Search',
+      main: 'Enter',
       shiftMode: null,
-      code: 'Search',
+      code: 'Enter',
       buttonHandler: Search,
     },
   ];

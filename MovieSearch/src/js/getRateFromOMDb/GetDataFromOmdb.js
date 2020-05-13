@@ -3,7 +3,7 @@ import addSlides from '../addSlides/addSlides';
 export default class GetDataFromOMDb {
     constructor (elements, translateRequest) {
         this.pageNumber = 1;
-        this.APIkey = '&apikey=492b206'; // bd3c609
+        this.APIkey = '&apikey=dfa071d2'; //  another APIkey 492b206 bd3c609
         this.APIurl = 'https://www.omdbapi.com/?';
         this.elements = elements;
         this.getTranslation = translateRequest;
@@ -49,7 +49,7 @@ export default class GetDataFromOMDb {
     errorHandler (error) {
         switch (error.toString()) {
             case 'Error: Movie not found!':
-                this.elements.message.innerText = !this.isNextPage ? `No results for ${this.userRequest}` : 'There are all movies we found!';
+                this.elements.message.innerText = !this.pageNumber > 1 ? `No results for ${this.userRequest}` : 'There are all movies we found!';
                 break;
             case 'Error: Request limit reached!':
                 this.elements.message.innerText = 'Request limit reached! Please, try again tomorrow';
@@ -77,9 +77,6 @@ export default class GetDataFromOMDb {
     }
 
     async getSearchResultsFromOMDB (request) {
-        if (this.pageNumber >= this.pages) {
-            return
-        }
         this.elements.message.innerText = '';
         this.toggleDataLoadingState();
         const OMDbRequest = await this.formingRequest(request);

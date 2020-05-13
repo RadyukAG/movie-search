@@ -1,5 +1,6 @@
 import createElement from '../createElement/createElement';
 import mySwiper from '../createSwiper/createSwiper';
+import '../../img/no-poster.png';
 
 function addToOrRemoveFromWatchlist(e) {
     const slide = e.target.closest('div');
@@ -42,12 +43,15 @@ function createWatchlistButton() {
 const createPoster = src => {
     return new Promise(resolve => {
         const poster = createElement('img', 'swiper-slide__poster');
+        if (src.match(/N\/A/)) {
+            src = './img/no-poster.png'
+        }
+        poster.src = src;
         poster.onerror = () => {
-            poster.src = '../img/no-poster.png';
+            poster.src = './img/no-poster.png';
             resolve(poster);
         }
-        poster.onload = () => resolve(poster)
-        poster.src = src});
+        poster.onload = () => resolve(poster)});
 }
 
 async function createSlide (obj) {
