@@ -28,14 +28,9 @@ function addToOrRemoveFromWatchlist(e) {
     localStorage.setItem('watchlist', JSON.stringify(watchlist));
 }
 
-
 function createWatchlistButton() {
     const button = createElement('button', 'add-to-watchlist-button');
-    if (document.querySelector('.info-lane p').innerText === 'This is your watchlist!') {
-        button.innerText = 'Remove from watchlist';
-    } else {
-        button.innerText = 'Add to watchlist';
-    }
+    button.innerText = document.querySelector('.info-lane p').innerText === 'This is your watchlist!' ? 'Remove from watchlist' : 'Add to watchlist';
     button.addEventListener('click', addToOrRemoveFromWatchlist);
     return button;   
 }
@@ -66,13 +61,12 @@ async function createSlide (obj) {
     return slide;
 }
 
-
 export default function addSlides(dataArray, isNextPage, elements) {
     if (!isNextPage) {
         elements.mySwiper.removeAllSlides();
         elements.swiperWrapper.style.justifyContent = dataArray.length < 4 ? 'center' : null;
     }
-    if (dataArray.length > 0) {
+    if (dataArray.length) {
         Promise.all(dataArray.map(el => createSlide(el)))
             .then(slides => {
                 slides.forEach(el => {

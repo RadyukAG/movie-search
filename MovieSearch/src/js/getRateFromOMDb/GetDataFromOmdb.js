@@ -3,7 +3,7 @@ import addSlides from '../addSlides/addSlides';
 export default class GetDataFromOMDb {
     constructor (elements, translateRequest) {
         this.pageNumber = 1;
-        this.APIkey = '&apikey=dfa071d2'; //  another APIkey 492b206 bd3c609
+        this.APIkey = '&apikey=492b206'; //  another APIkey  bd3c609
         this.APIurl = 'https://www.omdbapi.com/?';
         this.elements = elements;
         this.getTranslation = translateRequest;
