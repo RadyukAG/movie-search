@@ -320,7 +320,7 @@ html {
     position: absolute;
     top: 50px;
     right: 20px;
-    width: 495px;
+    width: auto;
     padding: 10px;
     display: grid;
     grid-row-gap: 10px;
